@@ -1,0 +1,158 @@
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import tseslint from 'typescript-eslint'
+import prettierConfig from 'eslint-config-prettier'
+import reactPlugin from 'eslint-plugin-react'
+import jsxA11y from 'eslint-plugin-jsx-a11y'
+import importPlugin from 'eslint-plugin-import-x'
+
+export default tseslint.config(
+  { ignores: ['dist', 'build', '.react-router', 'node_modules', '.husky'] },
+  {
+    extends: [js.configs.recommended, ...tseslint.configs.recommended, prettierConfig],
+    files: ['**/*.{ts,tsx,js,jsx}'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        ...globals.jest,
+        JSX: true,
+      },
+    },
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+      'react': reactPlugin,
+      'jsx-a11y': jsxA11y,
+      'import-x': importPlugin,
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+
+      // User Customs
+      // style
+      'semi': ['error', 'always'],
+      'quotes': ['error', 'single'],
+      'brace-style': ['error', '1tbs'],
+      'curly': ['error', 'multi-line', 'consistent'],
+      'object-curly-spacing': ['error', 'always'],
+      'object-curly-newline': 'off',
+      'react/display-name': 'off',
+      'react/no-unescaped-entities': 'off',
+      'keyword-spacing': ['error', { after: true }],
+      'comma-dangle': ['error', 'always-multiline'],
+      'comma-spacing': ['error', { before: false, after: true }],
+      'func-call-spacing': ['error', 'never'],
+      // best practice
+      'no-trailing-spaces': 'error',
+      'no-else-return': 'error',
+      'vars-on-top': 'error',
+      'computed-property-spacing': ['error', 'never'],
+      'consistent-this': ['error', 'that'],
+      'function-call-argument-newline': ['error', 'consistent'],
+      '@typescript-eslint/indent': 'off',
+      'max-len': ['error', { code: 256, tabWidth: 2, ignoreComments: true, ignoreUrls: true, ignoreStrings: true, ignoreTemplateLiterals: true, ignoreRegExpLiterals: true }],
+      'max-lines': 'off',
+      'max-lines-per-function': ['error', { max: 600, skipBlankLines: true, skipComments: true }],
+      'max-nested-callbacks': ['error', 5],
+      'max-params': ['error', 10],
+      'multiline-ternary': 'off',
+      'no-negated-condition': 'off',
+      'no-nested-ternary': 0,
+      'no-plusplus': ['error', { allowForLoopAfterthoughts: false }],
+      'sort-keys': 'off',
+      'sort-vars': 'off',
+      'template-tag-spacing': 'off',
+      'no-template-curly-in-string': 'error',
+      'require-atomic-updates': 'error',
+      'array-callback-return': 'error',
+      'block-scoped-var': 'error',
+      'consistent-return': 'off',
+      'default-param-last': 'error',
+      'dot-location': ['error', 'property'],
+      'dot-notation': ['error'],
+      'eqeqeq': 'error',
+      'grouped-accessor-pairs': 'error',
+      'no-caller': 'error',
+      'no-constructor-return': 'error',
+      'no-empty-function': ['error', { allow: ['constructors', 'functions', 'arrowFunctions'] }],
+      'no-eq-null': 'error',
+      'no-eval': 'error',
+      'no-floating-decimal': 'error',
+      'no-implicit-coercion': 'error',
+      'no-implied-eval': 'error',
+      'no-labels': 'error',
+      'no-lone-blocks': 'error',
+      'no-loop-func': 'error',
+      'no-new': 'error',
+      'no-new-func': 'error',
+      'no-new-wrappers': 'error',
+      'no-param-reassign': 'warn',
+      'no-proto': 'error',
+      'no-return-assign': 0,
+      'no-return-await': 'off',
+      'no-script-url': 'error',
+      'no-self-compare': 'error',
+      'no-sequences': 'error',
+      'no-throw-literal': 'error',
+      'no-unmodified-loop-condition': 'error',
+      'no-unused-expressions': 'off',
+      'no-useless-call': 'error',
+      'no-useless-concat': 'error',
+      'no-useless-return': 'error',
+      'no-void': 'error',
+      'nonblock-statement-body-position': 'off',
+      'prefer-promise-reject-errors': 'error',
+      'prefer-regex-literals': 'error',
+      'require-await': 'off',
+      'react-hooks/exhaustive-deps': 'off',
+      'yoda': ['error', 'never', { exceptRange: true }],
+      // strict mode
+      'strict': ['error', 'never'],
+      // variables
+      'no-shadow': 'off',
+      '@typescript-eslint/no-shadow': 'off',
+      'no-use-before-define': 0,
+      'func-names': 0,
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: 'next' }],
+      '@typescript-eslint/no-empty-interface': ['error'],
+      'camelcase': 'off',
+      '@typescript-eslint/naming-convention': 'off',
+      'eol-last': 'error',
+      // comments
+      'line-comment-position': ['off', 'above'],
+      'no-multi-spaces': ['error', { ignoreEOLComments: true }],
+      'no-warning-comments': ['error', { terms: ['TODO', 'FIXME'] }],
+      'multiline-comment-style': ['error', 'separate-lines'],
+      'spaced-comment': 'off',
+      'space-infix-ops': 'error',
+      'react-hooks/rules-of-hooks': 'warn',
+      'jsx-a11y/aria-props': 'off',
+      'import-x/order': [
+        'warn',
+        {
+          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+          'newlines-between': 'never',
+          pathGroupsExcludedImportTypes: ['builtin', 'object'],
+        },
+      ],
+      'no-async-promise-executor': 'warn',
+    },
+    settings: {
+      'import-x/resolver': {
+        typescript: { project: './tsconfig.json' },
+      },
+    },
+  },
+  {
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+    },
+  },
+)

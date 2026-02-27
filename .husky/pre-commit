@@ -1,0 +1,10 @@
+if [ -f .env ]; then
+  export $(grep -v '^#' .env | xargs)
+fi
+
+if [ "$SKIP_HUSKY" = "true" ]; then
+  echo "Husky: SKIP_HUSKY is true, skipping pre-commit hooks."
+  exit 0
+fi
+
+pnpm exec lint-staged

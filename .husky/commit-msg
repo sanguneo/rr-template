@@ -1,0 +1,10 @@
+if [ -f .env ]; then
+  export $(grep -v '^#' .env | xargs)
+fi
+
+if [ "$SKIP_HUSKY" = "true" ] || [ "$SKIP_COMMITLINT" = "true" ]; then
+  echo "Husky: SKIP_HUSKY/SKIP_COMMITLINT is true, skipping commit-msg hooks."
+  exit 0
+fi
+
+pnpm exec commitlint --edit ${1}
