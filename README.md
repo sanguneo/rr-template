@@ -1,17 +1,21 @@
 # RR-Template (React Router v7)
 
+[한국어](./README.ko.md)
+
 A modern, high-premium boilerplate for building full-stack React applications using React Router v7. This template is designed for scalability, featuring a dynamic middleware system, robust styling patterns, and automated DX tools.
 
 ## ✨ Core Features
 
 - 🚀 **React Router v7**: Latest features including SSR and file-system routing.
 - 🔗 **Dynamic Middleware System**: Plug-and-play middleware with automatic file discovery.
+- 📋 **Forms & Validation**: Scalable forms using [React Hook Form](https://react-hook-form.com/) and [Yup](https://github.com/jquense/yup) for schema validation.
+- 📡 **Data Fetching**: Efficient server state management with [TanStack Query (React Query)](https://tanstack.com/query/latest).
 - 🎨 **Premium Styling**: SCSS with established patterns (mixins, variables, reset).
 - 🧠 **State Management**: Lightweight and fast state management with [Zustand](https://zustand-demo.pmnd.rs/).
 - 🧪 **Testing Suite**: Unit testing with **Vitest** and E2E testing with **Playwright**.
 - 🛠️ **Developer Experience**: 
   - **Husky & Lint-staged**: Automated linting and formatting on commit.
-  - **Commitlint**: Conventional commit message enforcement (e.g., `feat:`, `fix:`).
+  - **Commitlint**: Conventional commit message enforcement.
   - **.env Controlled Hooks**: Easily skip hooks locally when needed.
 - 🐳 **Docker Ready**: Production-optimized Dockerfile included.
 
@@ -19,13 +23,16 @@ A modern, high-premium boilerplate for building full-stack React applications us
 
 ```text
 src/
+├── apis/             # API definition and fetching logic
 ├── app/              # Routes and root configurations
-├── components/       # UI components (shadcn-like structure)
-├── middleware/       # Dynamic middleware files
-├── store/            # Zustand stores
+├── components/       # Reusable UI components
+├── constants/        # Constants and configuration
+├── hooks/            # Custom React hooks
+├── middlewares/      # Dynamic middleware files
+├── stores/           # Zustand state management
 ├── styles/           # Global SCSS (variables, mixins, reset)
-├── utils/            # Shared utilities
-└── types/            # Global type definitions
+├── types/            # TypeScript definitions
+├── utils/            # Shared utility functions
 ```
 
 ## 🔗 Middleware System
