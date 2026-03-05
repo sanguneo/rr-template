@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router';
-import { useCounterStore } from '@/store/useCounterStore';
+import { useCounterStore } from '@/stores/useCounterStore';
 import { Button } from '@/components/ui/button';
 import s from './counter.module.scss';
 import type { Route } from './+types/counter';

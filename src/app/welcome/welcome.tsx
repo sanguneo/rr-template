@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router';
-import { useCounterStore } from '@/store/useCounterStore';
+import { useCounterStore } from '@/stores/useCounterStore';
 import logoDark from './logo-dark.svg';
 import logoLight from './logo-light.svg';
 
