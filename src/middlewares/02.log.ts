@@ -1,6 +1,6 @@
-import type { Middleware } from '.';
+import type { TMiddleware } from './types';
 
-export const middleware: Middleware = async (context, next) => {
+export const logMiddleware: TMiddleware = async (context, next) => {
   const { request } = context.args;
   const start = Date.now();
   console.log(`[Log Middleware] Request start: ${request.url}`);

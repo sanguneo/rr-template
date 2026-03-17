@@ -1,7 +1,10 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { useState } from 'react';
 import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
+import composeMiddleware from '../middlewares';
 import type { Route } from './+types/root';
 import './app.css';
-import composeMiddleware from '../middlewares';
 
 export const loader = async (_args: Route.LoaderArgs) => {
   const execute = composeMiddleware();
@@ -45,10 +48,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
     </html>
   );
 }
-
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { useState } from 'react';
 
 export default function App() {
   const [queryClient] = useState(() => new QueryClient());

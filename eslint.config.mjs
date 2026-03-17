@@ -1,12 +1,12 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
-import prettierConfig from 'eslint-config-prettier'
-import reactPlugin from 'eslint-plugin-react'
-import jsxA11y from 'eslint-plugin-jsx-a11y'
-import importPlugin from 'eslint-plugin-import-x'
+import js from '@eslint/js';
+import globals from 'globals';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import tseslint from 'typescript-eslint';
+import prettierConfig from 'eslint-config-prettier';
+import reactPlugin from 'eslint-plugin-react';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
+import importPlugin from 'eslint-plugin-import-x';
 
 export default tseslint.config(
   { ignores: ['dist', 'build', '.react-router', 'node_modules', '.husky'] },
@@ -25,20 +25,26 @@ export default tseslint.config(
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
-      'react': reactPlugin,
+      react: reactPlugin,
       'jsx-a11y': jsxA11y,
       'import-x': importPlugin,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      'react-refresh/only-export-components': [
+        'warn',
+        {
+          allowConstantExport: true,
+          allowExportNames: ['clientLoader', 'loader', 'action', 'meta', 'links', 'headers'],
+        },
+      ],
 
       // User Customs
       // style
-      'semi': ['error', 'always'],
-      'quotes': ['error', 'single'],
+      semi: ['error', 'always'],
+      quotes: ['error', 'single', { avoidEscape: true }],
       'brace-style': ['error', '1tbs'],
-      'curly': ['error', 'multi-line', 'consistent'],
+      curly: ['error', 'multi-line', 'consistent'],
       'object-curly-spacing': ['error', 'always'],
       'object-curly-newline': 'off',
       'react/display-name': 'off',
@@ -55,7 +61,18 @@ export default tseslint.config(
       'consistent-this': ['error', 'that'],
       'function-call-argument-newline': ['error', 'consistent'],
       '@typescript-eslint/indent': 'off',
-      'max-len': ['error', { code: 256, tabWidth: 2, ignoreComments: true, ignoreUrls: true, ignoreStrings: true, ignoreTemplateLiterals: true, ignoreRegExpLiterals: true }],
+      'max-len': [
+        'error',
+        {
+          code: 256,
+          tabWidth: 2,
+          ignoreComments: true,
+          ignoreUrls: true,
+          ignoreStrings: true,
+          ignoreTemplateLiterals: true,
+          ignoreRegExpLiterals: true,
+        },
+      ],
       'max-lines': 'off',
       'max-lines-per-function': ['error', { max: 600, skipBlankLines: true, skipComments: true }],
       'max-nested-callbacks': ['error', 5],
@@ -68,14 +85,14 @@ export default tseslint.config(
       'sort-vars': 'off',
       'template-tag-spacing': 'off',
       'no-template-curly-in-string': 'error',
-      'require-atomic-updates': 'error',
+      'require-atomic-updates': ['error', { allowProperties: true }],
       'array-callback-return': 'error',
       'block-scoped-var': 'error',
       'consistent-return': 'off',
       'default-param-last': 'error',
       'dot-location': ['error', 'property'],
       'dot-notation': ['error'],
-      'eqeqeq': 'error',
+      eqeqeq: 'error',
       'grouped-accessor-pairs': 'error',
       'no-caller': 'error',
       'no-constructor-return': 'error',
@@ -110,9 +127,9 @@ export default tseslint.config(
       'prefer-regex-literals': 'error',
       'require-await': 'off',
       'react-hooks/exhaustive-deps': 'off',
-      'yoda': ['error', 'never', { exceptRange: true }],
+      yoda: ['error', 'never', { exceptRange: true }],
       // strict mode
-      'strict': ['error', 'never'],
+      strict: ['error', 'never'],
       // variables
       'no-shadow': 'off',
       '@typescript-eslint/no-shadow': 'off',
@@ -121,7 +138,7 @@ export default tseslint.config(
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: 'next' }],
       '@typescript-eslint/no-empty-interface': ['error'],
-      'camelcase': 'off',
+      camelcase: 'off',
       '@typescript-eslint/naming-convention': 'off',
       'eol-last': 'error',
       // comments
@@ -155,4 +172,4 @@ export default tseslint.config(
       '@typescript-eslint/no-unused-vars': 'off',
     },
   },
-)
+);

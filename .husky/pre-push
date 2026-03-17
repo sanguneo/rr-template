@@ -1,0 +1,10 @@
+if [ -f .env ]; then
+  export $(grep -v '^#' .env | xargs)
+fi
+
+if [ "$SKIP_HUSKY" = "true" ] || [ "$SKIP_PRE_PUSH_CHECK" = "true" ]; then
+  echo "Husky: SKIP_HUSKY/SKIP_PRE_PUSH_CHECK is true, skipping pre-push hooks."
+  exit 0
+fi
+
+pnpm check

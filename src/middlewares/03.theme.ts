@@ -1,9 +1,10 @@
-import type { Middleware } from '.';
+import type { TMiddleware } from './types';
 
-export const middleware: Middleware = async (context, next) => {
+export const themeMiddleware: TMiddleware = async (context, next) => {
   const result = await next();
 
   if (result instanceof Response) return result;
+  if (!result || typeof result !== 'object') return result;
 
   console.log('[Theme Middleware] Injecting settings');
   return {

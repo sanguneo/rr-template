@@ -1,38 +1,26 @@
 import type { LoaderFunctionArgs } from 'react-router';
+import { authMiddleware } from './01.auth';
+import { logMiddleware } from './02.log';
+import { themeMiddleware } from './03.theme';
+import type { TMiddleware, IMiddlewareContext } from './types';
 
-export type MiddlewareNext = () => Promise<Response | any>;
-
-export interface MiddlewareContext {
-  args: LoaderFunctionArgs;
-  data: Record<string, any>;
-}
-
-export type Middleware = (context: MiddlewareContext, next: MiddlewareNext) => Promise<Response | any>;
-
-const middlewareModules = import.meta.glob('./*.ts', { eager: true });
-
-const middlewares: Middleware[] = Object.keys(middlewareModules)
-  .filter((path) => !path.endsWith('index.ts'))
-  .sort() // Sorts by filename (e.g., 01.auth.ts, 02.log.ts)
-  .map((path) => {
-    const mod = middlewareModules[path] as any;
-    // Support both named export and default export
-    return mod.middleware || mod.authMiddleware || mod.default;
-  })
-  .filter((m): m is Middleware => typeof m === 'function');
+const middlewares: TMiddleware[] = [authMiddleware, logMiddleware, themeMiddleware];
 
 /**
  * Composes multiple middleware functions into a single loader-compatible function.
  */
 export default function composeMiddleware() {
-  return async (args: LoaderFunctionArgs, finalLoader: (context: MiddlewareContext) => Promise<Response | any>) => {
+  return async (
+    args: LoaderFunctionArgs,
+    finalLoader: (context: IMiddlewareContext) => Promise<Response | unknown>,
+  ) => {
     let index = -1;
-    const context: MiddlewareContext = {
+    const context: IMiddlewareContext = {
       args,
-      data: {}, // Initialize shared data
+      data: {},
     };
 
-    async function dispatch(i: number): Promise<Response | any> {
+    async function dispatch(i: number): Promise<Response | unknown> {
       if (i <= index) {
         throw new Error('next() called multiple times');
       }

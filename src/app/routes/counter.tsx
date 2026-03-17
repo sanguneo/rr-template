@@ -1,51 +1,52 @@
 import { NavLink } from 'react-router';
-import { useCounterStore } from '@/stores/useCounterStore';
 import { Button } from '@/components/ui/button';
-import s from './counter.module.scss';
+import { useCounterStore } from '@/stores/useCounterStore';
 import type { Route } from './+types/counter';
 
-export const meta: Route.MetaFunction = () => [{ title: 'SCSS & Zustand Example' }, { name: 'description', content: 'Demonstrating SCSS Modules and Zustand' }];
+export const meta: Route.MetaFunction = () => [
+  { title: 'Counter Example' },
+  { name: 'description', content: 'Zustand counter sample with clear controls' },
+];
 
-export default function CounterPage({ loaderData }: Route.ComponentProps) {
+export default function CounterPage() {
   const { count, increment, decrement, reset } = useCounterStore();
 
   return (
-    <div className={s.container}>
-      <NavLink to="/" className="mb-8 text-blue-600 hover:underline">
-        ← 홈으로 돌아가기
-      </NavLink>
-      <h1 className={s.title}>SCSS Counter</h1>
+    <main className="min-h-screen bg-slate-50 px-6 py-10 text-slate-900">
+      <section className="mx-auto flex w-full max-w-2xl flex-col gap-6">
+        <NavLink
+          to="/"
+          className="inline-flex w-fit items-center text-sm font-medium text-blue-700 hover:text-blue-600 hover:underline">
+          ← Back to Home
+        </NavLink>
 
-      <div className={s.counterBox}>
-        <span className={s.countDisplay}>{count}</span>
+        <article className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 md:p-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-blue-700">Zustand Counter</p>
+          <h1 className="mt-2 text-3xl font-bold">Simple, visible, and accessible controls</h1>
+          <p className="mt-3 text-sm leading-6 text-slate-600">
+            Buttons are fully Tailwind-based and keep clear contrast in light mode. Use the controls below to test state
+            updates.
+          </p>
 
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="lg" onClick={decrement}>
-            -
-          </Button>
-          <Button variant="secondary" size="lg" onClick={reset}>
-            Reset
-          </Button>
-          <Button variant="default" size="lg" onClick={increment}>
-            +
-          </Button>
-        </div>
-      </div>
-
-      <div className={s.descriptionBox}>
-        <h2>Modern Style Guide</h2>
-        <ul>
-          <li>
-            <strong>SCSS Modules</strong>: Scoped styles with <code>.module.scss</code>.
-          </li>
-          <li>
-            <strong>Global Support</strong>: Variables and mixins via <code>@use</code>.
-          </li>
-          <li>
-            <strong>Tailwind Synergy</strong>: Combining utility classes and scoped CSS.
-          </li>
-        </ul>
-      </div>
-    </div>
+          <div className="mt-8 rounded-xl border border-slate-200 bg-slate-50 p-5">
+            <div className="mb-5 flex items-center justify-between">
+              <span className="text-sm text-slate-600">Current Count</span>
+              <span className="text-4xl font-bold tabular-nums text-slate-900">{count}</span>
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <Button variant="outline" size="lg" onClick={decrement} aria-label="decrement">
+                -
+              </Button>
+              <Button variant="default" size="lg" onClick={increment} aria-label="increment">
+                +
+              </Button>
+              <Button variant="secondary" onClick={reset}>
+                Reset
+              </Button>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
   );
 }

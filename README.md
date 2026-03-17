@@ -2,106 +2,111 @@
 
 [한국어](./README.ko.md)
 
-A modern, high-premium boilerplate for building full-stack React applications using React Router v7. This template is designed for scalability, featuring a dynamic middleware system, robust styling patterns, and automated DX tools.
+React Router v7 template with production-grade quality gates, explicit middleware composition, and reusable client infrastructure.
 
-## ✨ Core Features
+## Tech Stack
 
-- 🚀 **React Router v7**: Latest features including SSR and file-system routing.
-- 🔗 **Dynamic Middleware System**: Plug-and-play middleware with automatic file discovery.
-- 📋 **Forms & Validation**: Scalable forms using [React Hook Form](https://react-hook-form.com/) and [Yup](https://github.com/jquense/yup) for schema validation.
-- 📡 **Data Fetching**: Efficient server state management with [TanStack Query (React Query)](https://tanstack.com/query/latest).
-- 🎨 **Premium Styling**: SCSS with established patterns (mixins, variables, reset).
-- 🧠 **State Management**: Lightweight and fast state management with [Zustand](https://zustand-demo.pmnd.rs/).
-- 🧪 **Testing Suite**: Unit testing with **Vitest** and E2E testing with **Playwright**.
-- 🛠️ **Developer Experience**: 
-  - **Husky & Lint-staged**: Automated linting and formatting on commit.
-  - **Commitlint**: Conventional commit message enforcement.
-  - **.env Controlled Hooks**: Easily skip hooks locally when needed.
-- 🐳 **Docker Ready**: Production-optimized Dockerfile included.
+- React 19, React Router 7 (SPA mode)
+- TypeScript (`strict: true`)
+- Vite 7
+- TanStack Query
+- Zustand
+- React Hook Form + Yup
+- Tailwind CSS + SCSS
+- ESLint + Prettier + Husky + lint-staged
+- Vitest, Playwright
 
-## 🏗️ Project Structure
+## Getting Started
 
-```text
-src/
-├── apis/             # API definition and fetching logic
-├── app/              # Routes and root configurations
-├── components/       # Reusable UI components
-├── constants/        # Constants and configuration
-├── hooks/            # Custom React hooks
-├── middlewares/      # Dynamic middleware files
-├── stores/           # Zustand state management
-├── styles/           # Global SCSS (variables, mixins, reset)
-├── types/            # TypeScript definitions
-├── utils/            # Shared utility functions
-```
+### Requirements
 
-## 🔗 Middleware System
+- Node.js 20+
+- pnpm
 
-This template features a powerful, dynamic middleware system for loaders.
+### Install
 
-### How it works
-Any `.ts` file added to `src/middleware/` is automatically discovered and executed. Use numeric prefixes to control the order:
-- `01.auth.ts`
-- `02.log.ts`
-- `03.theme.ts`
-
-### Bubbling Up Pattern
-Middlewares use a "bubbling" pattern where they call `await next()` and then merge their own data into the result. This keeps your loaders clean.
-
-```typescript
-export const middleware: Middleware = async (context, next) => {
-  const result = await next(); // Get result from next middleware/loader
-  if (result instanceof Response) return result;
-
-  return { 
-    ...result, 
-    user: { name: 'Demo User' } // Inject data
-  };
-};
-```
-
-## 🛠️ Git Hooks (.env control)
-
-Husky and Commitlint are enabled by default to ensure code quality. You can control them via `.env`:
-
-```env
-# .env
-SKIP_HUSKY=false        # Set to true to skip all git hooks
-SKIP_COMMITLINT=false   # Set to true to skip only commitlint
-```
-
-## 🚀 Getting Started
-
-### Installation
 ```bash
 pnpm install
 ```
 
-### Development
-```bash
-pnpm run dev
+### Environment
+
+Use `.env` as needed. `VITE_API_BASE_URL` is used by `src/lib/http-client.ts`.
+
+```env
+VITE_API_BASE_URL=https://api.example.com
 ```
 
-### Type Check
-```bash
-pnpm run typecheck
-```
-
-### Testing
-```bash
-# Unit Tests
-pnpm run test
-
-# E2E Tests
-pnpm exec playwright test
-```
-
-## 📦 Production
+### Run Dev Server
 
 ```bash
-pnpm run build
-pnpm run start
+pnpm dev
 ```
 
----
-Built with ❤️ by Sangkwon.
+- Default port: `4000` (see `vite.config.ts`)
+
+## Scripts
+
+- `pnpm dev`: start development server
+- `pnpm build`: build for production
+- `pnpm start`: preview build output
+- `pnpm lint`: run ESLint
+- `pnpm lint:fix`: run ESLint with auto-fix
+- `pnpm typecheck`: React Router typegen + TypeScript check
+- `pnpm test`: run Vitest (`--passWithNoTests`)
+- `pnpm check`: run `lint + typecheck + test`
+- `pnpm check:fast`: run `lint + typecheck`
+- `pnpm analyze:graph`: analyze dependency graph/cycles
+
+## Project Structure
+
+```text
+src/
+├─ api/           # API functions
+├─ app/           # Router root/routes
+├─ components/    # Shared UI components
+├─ constants/     # App constants
+├─ hooks/         # Custom hooks
+├─ lib/           # Shared infra (http client, errors, query keys)
+├─ middlewares/   # Loader middleware chain
+├─ public/        # Static assets (vite publicDir)
+├─ stores/        # Zustand stores
+├─ styles/        # SCSS resources
+├─ types/         # Shared type definitions
+└─ utils/         # Utilities
+```
+
+## Middleware
+
+Middleware is explicitly composed in `src/middlewares/index.ts`.
+
+- `01.auth.ts`
+- `02.log.ts`
+- `03.theme.ts`
+- shared types: `src/middlewares/types.ts`
+
+## Quality Gates and Hooks
+
+- `pre-commit`: `lint-staged`
+- `commit-msg`: `commitlint`
+- `pre-push`: `pnpm check`
+
+You can skip hooks locally with `.env`:
+
+```env
+SKIP_HUSKY=true
+SKIP_COMMITLINT=true
+SKIP_PRE_PUSH_CHECK=true
+```
+
+## Lint / Prettier / Typecheck Rules
+
+- ESLint config: `eslint.config.mjs` (React Router export rules + strict code style)
+- Prettier config: `.prettierrc` (print width 120, single quote, trailing comma)
+- Type checking: `tsconfig.json` with `strict: true` + `react-router typegen`
+
+## Added Shared Infra
+
+- `src/lib/http-client.ts`: typed fetch wrapper with query/header handling and optional auth refresh hooks
+- `src/lib/http-error.ts`: normalized HTTP error model
+- `src/lib/query-keys.ts`: centralized React Query keys

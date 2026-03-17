@@ -5,7 +5,15 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import { visualizer } from 'rollup-plugin-visualizer';
 
 export default defineConfig({
-  plugins: [tsconfigPaths() as any, tailwindcss(), reactRouter(), visualizer({ emitFile: true, filename: 'stats.html' }) as any],
+  server: {
+    port: 4000,
+  },
+  plugins: [
+    tsconfigPaths() as any,
+    tailwindcss(),
+    reactRouter(),
+    visualizer({ emitFile: true, filename: 'stats.html' }) as any,
+  ],
   resolve: {
     dedupe: ['react', 'react-dom', 'react-router', 'react-router-dom'],
   },

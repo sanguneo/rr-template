@@ -1,7 +1,7 @@
 import { redirect } from 'react-router';
-import type { Middleware } from '.';
+import type { TMiddleware } from './types';
 
-export const authMiddleware: Middleware = async (context, next) => {
+export const authMiddleware: TMiddleware = async (context, next) => {
   const { request } = context.args;
   console.log('Auth middleware executing for:', request.url);
 
@@ -16,6 +16,10 @@ export const authMiddleware: Middleware = async (context, next) => {
 
   // If it's a redirect or other Response, just pass it along
   if (result instanceof Response) {
+    return result;
+  }
+
+  if (!result || typeof result !== 'object') {
     return result;
   }
 
